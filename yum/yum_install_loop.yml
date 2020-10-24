@@ -1,0 +1,23 @@
+---
+- name: Install software
+  become: yes
+  hosts: all
+  vars:
+    packages:
+      - name: nginx
+        required: True
+
+      - name: python3
+        required: True
+
+  tasks:
+    - name: Install "{{ item.name }}" on CentOS
+      yum:
+        name: "{{ item.name }}"
+        state: present
+
+      when:
+        - item.required == True
+        - ansible_facts['distribution'] =="CentOS"
+
+      loop: "{{ packages }}"
