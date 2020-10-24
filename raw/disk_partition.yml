@@ -1,0 +1,11 @@
+---
+- name: Get disk partition
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Show disk partiton
+      raw: "df -h"
+      register: print_output
+
+    - debug: var=print_output.stdout_lines
