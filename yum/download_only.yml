@@ -1,0 +1,19 @@
+---
+- name: Download only
+  become: yes
+  hosts: all
+  vars_files:
+    - /etc/ansible/ansible-playbooks/yum/vars/install_packages.yml
+  tasks:
+    - name: Download "{{ item.name }}"
+      yum:
+        name:
+          - "{{ item.name }}"
+        state: latest
+        download_only: true
+
+      when:
+        - item.required == True
+        - ansible_facts['distribution'] =="CentOS"
+
+      loop: "{{ packages }}"
