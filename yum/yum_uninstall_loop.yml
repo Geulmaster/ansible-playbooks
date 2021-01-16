@@ -1,0 +1,18 @@
+---
+- name: Uninstall software
+  become: yes
+  hosts: all
+  vars_files:
+    - /etc/ansible/ansible-playbooks/yum/vars/remove_packages.yml
+
+  tasks:
+    - name: Uninstall "{{ item.name }}" on CentOS
+      yum:
+        name: "{{ item.name }}"
+        state: absent
+
+      when:
+        - item.required == True
+        - ansible_facts['distribution'] =="CentOS"
+
+      loop: "{{ packages }}"
