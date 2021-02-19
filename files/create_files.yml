@@ -1,0 +1,22 @@
+---
+- name: Touch files with an optional mode
+  become: yes
+  hosts: all
+  vars_files:
+    - /etc/ansible/ansible-playbooks/files/vars/details.yml
+  tasks:
+    - name: Touch files with an optional mode
+      ansible.builtin.file:
+        dest: "{{ item.path }}"
+        state: touch
+        mode: "0007"
+        
+      loop: "{{ directories }}"
+
+    - name: Insert script
+      blockinfile:
+        path: "{{ item.path }}"
+        block: |
+          echo yoohooo
+        
+      loop: "{{ directories }}"
