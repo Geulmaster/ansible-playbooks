@@ -1,0 +1,38 @@
+---
+- name: Test s3
+  hosts: local
+  vars:
+    file_name: /files/test.txt
+    bucket_name: testbucketxforce
+
+  tasks:
+    - name: Create a new bucket
+      amazon.aws.aws_s3:
+        bucket: "{{ bucket_name }}"
+        mode: create
+        region: us-east-1
+
+    - name: Simple PUT operation
+      amazon.aws.aws_s3:
+        bucket: "{{ bucket_name }}"
+        object: "{{ file_name }}"
+        src: ~/test.txt
+        mode: put
+
+    - name: Create a bucket with key as directory, in US region
+      amazon.aws.aws_s3:
+        bucket: testbucketxforce2
+        object: /my/directory/path
+        mode: create
+        region: us-east-1
+
+    - name: Delete an object from a bucket
+      amazon.aws.aws_s3:
+        bucket: "{{ bucket_name }}"
+        object: "{{ file_name }}"
+        mode: delobj
+
+    - name: Delete a bucket and all contents
+      amazon.aws.aws_s3:
+        bucket: "{{ bucket_name }}"
+        mode: delete
