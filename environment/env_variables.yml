@@ -1,0 +1,15 @@
+---
+- name: environment variables
+  hosts: all
+  vars:
+    local_shell: "{{ lookup('env','SHELL') }}"
+    user: "{{ lookup('env','USER') }}"
+    home: "{{ lookup('env','HOME') }}"
+    easter: "{{ lookup('env','easter') }}"
+  tasks:
+    - debug:
+        msg: "shell type: {{ local_shell }}"
+    - debug:
+        msg: "username is: {{ user }}"
+    - debug:
+        msg: "home directory is: {{ home }}"
