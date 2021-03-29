@@ -1,0 +1,19 @@
+---
+- name: File exsitence
+  become: yes
+  hosts: all
+  vars_files:
+    - /etc/ansible/ansible-playbooks/files/vars/details.yml
+  tasks:
+    - name: Get stats of "{{ file_path }}"
+      stat:
+        path: "{{ file_path }}"
+      register: st
+    - name: Fail if the file does not belong to 'root'
+      fail:
+        msg: "Whoops! file ownership has changed"
+      when: st.stat.pw_name != 'root'
+    - name: Check if path a directory
+      debug:
+        msg: "The file or directory exists"
+      when: st.stat.exists and st.stat.isdir

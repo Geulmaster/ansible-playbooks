@@ -1,2 +1,4 @@
 directories:
   - path: ~/koko.sh
+
+file_path: /root
