@@ -1,0 +1,2 @@
+path: /root
+dest: /etc/ansible/ansible-playbooks/raw/output.txt

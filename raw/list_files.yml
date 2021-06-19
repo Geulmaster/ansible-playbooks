@@ -3,7 +3,7 @@
   hosts: all
   gather_facts: false
   vars_files:
-    - /etc/ansible/vars/test_path.yml
+    - /etc/ansible/ansible-playbooks/raw/vars/paths.yml
 
   tasks:
     - name: Ordered list of "{{ path }}"
@@ -11,3 +11,17 @@
       register: print_output
 
     - debug: var=print_output.stdout_lines
+
+    - name: Touch output file with an optional mode
+      ansible.builtin.file:
+        dest: "{{ dest }}"
+        state: touch
+        mode: "0007"
+      delegate_to: 127.0.0.1
+
+    - name: log print_output to file
+      lineinfile:
+        line: "{{ print_output }}"
+        insertafter: EOF
+        dest: "{{ dest }}"
+      delegate_to: 127.0.0.1

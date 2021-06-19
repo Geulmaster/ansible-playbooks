@@ -1,4 +1,5 @@
 directories:
-  - path: ~/koko.sh
+  - path: ~/crazy.sh
+  - path: ~/lopo/koko.sh
 
 file_path: /root
